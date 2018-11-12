@@ -22,11 +22,21 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.board{
+  width: 320px;
+  height: 320px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.square{
+  margin: -1px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  border: #2a4f97;
+  border-style: solid;
+  border-width: 1px;
+  align-items: center;
 }
