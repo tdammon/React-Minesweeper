@@ -8,60 +8,59 @@ const mapReduxStateToProps = (reduxState) => ({reduxState})
 class Board extends Component {
   state = {
     clicked: false,
+    displayFlag: false,
     counter: 0,
   }
   
 
   imageDisplay= () => {
-    if(!this.state.clicked){
-      //return this.props.id
+    if(!this.state.clicked && !this.state.displayFlag){
       return <img key={this.props.id} src='images/Frog-1.png' alt='Not Clicked'/>
+    } else if(this.state.displayFlag){
+      return <img src='images/Yellow.png' alt='None' />
     } else {
       return this.state.counter;
     }
   }
 
-  showNumber= () => {
-    let Xcounter = 0;
-    console.log(this.props.keys)
-    console.log(this.props.reduxState.reducer.board[this.props.keys]) 
-    if(this.props.keys% 8 ===0){
-        if(this.props.reduxState.reducer.board[this.props.keys +1] === 'X'){
-          Xcounter++
-        }
-      }
-    if(this.props.keys% 8 ===7){
-        if(this.props.reduxState.reducer.board[this.props.keys -1] === 'X'){
-          Xcounter++
-        }
-      }
-    if(this.props.keys/8 <1){
-      if(this.props.reduxState.reducer.board[this.props.keys +8] === 'X'){
-        Xcounter++
-      }
+  handleMouseDown =  e => {
+    document.oncontextmenu = function() {
+      return false;
+  }
+    e = e || window.event;
+    //console.log(e.which)
+    console.log(this.state)
+    switch(e.which) {
+      case 1 : this.showNumber(); break;
+      case 2 : break;
+      case 3 : this.displayFlag(); return false;
+      default: break;  
     }
-    if(this.props.keys/8 >=7){
-      if(this.props.reduxState.reducer.board[this.props.keys -8] === 'X'){
-        Xcounter++
-      }
-    }
-    if(this.props.keys % 8 !== 0 && this.props.keys % 8 !== 7){
-      if(this.props.reduxState.reducer.board[this.props.keys +1] === 'X'){
-        Xcounter++
-    
-      }
-      if(this.props.reduxState.reducer.board[this.props.keys -1]=== 'X'){
-        Xcounter++
-      }
+  }
 
-    }
-    if(Math.floor(this.props.keys)/8 > 0 && Math.floor(this.props.keys)/ 8 < 7){
-      if(this.props.reduxState.reducer.board[this.props.keys +8] === 'X'){
-        Xcounter++
-    
-      }
-      if(this.props.reduxState.reducer.board[this.props.keys -8]=== 'X'){
-        Xcounter++
+  displayFlag= () => {
+    console.log('running')
+    this.setState({...this.state, displayFlag : !this.state.displayFlag })
+    return this.state.displayFlag;
+  }
+
+  showNumber= () => {
+    console.log('run')
+    let Xcounter = 0;
+    let edge = Math.sqrt(this.props.reduxState.reducer.board.length)
+    console.log(edge)
+    let keys = this.props.keys
+    let board = this.props.reduxState.reducer.board
+    let minX = keys%edge === 0 ? 0 : -1;
+    let maxX = keys%edge === (edge-1) ? 0 : 1;
+    let minY = Math.floor(keys/edge) == 0 ? 0 : -1;
+    let maxY = Math.floor(keys/edge) == (edge-1) ? 0 : 1;
+    for(let x = minX; x <= maxX; x++){
+      for(let y = minY; y<=maxY; y++){
+        if(board[keys+x+(y*edge)]=== 'X'){
+          Xcounter++
+          
+        }
       }
     }
     if(this.props.id === 'X'){
@@ -70,6 +69,40 @@ class Board extends Component {
     }
     this.setState({...this.state, clicked: true, counter: Xcounter})
     return this.state.counter;
+    // if(keys% 8 ===0 && board[keys +1] === 'X'){
+    //    Xcounter++
+    //   }
+    // if(keys% 8 ===7 &&board[keys -1] === 'X'){
+    //     Xcounter++
+    //   }
+    // if(keys/8 <1 &&board[keys +8] === 'X'){
+    //     Xcounter++
+    //   }
+    // if(keys/8 >=7 && board[keys -8] === 'X'){
+    //     Xcounter++
+    //   }
+    // if(keys % 8 !== 0 && keys % 8 !== 7){
+    //   if(board[keys +1] === 'X'){
+    //     Xcounter++
+    //   }
+    //   if(board[keys -1]=== 'X'){
+    //     Xcounter++
+    //   }
+    // }
+    // if(Math.floor(keys/8) > 0 && Math.floor(keys/8) < 7){
+    //   if(board[keys +8] === 'X'){
+    //     Xcounter++
+    //   }
+    //   if(board[keys -8]=== 'X'){
+    //     Xcounter++
+    //   }
+    // }
+    // if(this.props.id === 'X'){
+    //   this.setState({...this.state, clicked: true, counter: 'X'})
+    //   return this.state.counter;
+    // }
+    // this.setState({...this.state, clicked: true, counter: Xcounter})
+    // return this.state.counter;
   }
 
   // checkSquare= () => { 
@@ -79,7 +112,7 @@ class Board extends Component {
   render() {
     return (
       <div className="App">
-          <div onClick={this.showNumber}className='square'>{this.imageDisplay()}</div>
+          <div onMouseDown={()=>this.handleMouseDown()} className='square'>{this.imageDisplay()}</div>
 
       </div>
     );

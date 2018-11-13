@@ -23,8 +23,9 @@
 }
 
 .board{
-  width: 320px;
-  height: 320px;
+  /* width: 50%;
+  padding-top: 50%; */
+  /* height: 50%; */
   display: flex;
   flex-wrap: wrap;
 }

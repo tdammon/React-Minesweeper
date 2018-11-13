@@ -3,13 +3,23 @@ import './App.css';
 import Board from '../Board/Board'
 import {connect} from 'react-redux'
 
+
 const mapReduxStateToProps= (reduxState) => ({
   reduxState
 })
 
 class App extends Component {
   state = {
+    size : '8',
     squareArray : []
+  }
+
+  handleChange =(event) => {
+    this.setState({
+      ...this.state,
+      size : Number(event.target.value)
+    })
+    console.log(this.state)
   }
 
   //This function makes a an array of numbers with 1/4 'X's and 3/4 'O's
@@ -35,10 +45,10 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          
-          <button onClick={()=>this.boardMaker(8)}>8x8</button>
+          <input onChange={this.handleChange} placeholder='Size'/>
+          <button onClick={()=>this.boardMaker(this.state.size)}>Make Board</button>
 
-          <div className='board'>
+          <div className='board' style={{width: 40*this.state.size}}>
 
             {/* {this.state.squareArray.map(space => {
               return(
