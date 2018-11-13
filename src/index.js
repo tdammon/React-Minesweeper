@@ -8,18 +8,27 @@ import logger from 'redux-logger';
 import * as serviceWorker from './serviceWorker';
 
 const reducer = (state={board : []}, action) => {
-    if(action.type === 'MAKE_BOARD'){
-        console.log(action.payload)
-        state = ({ board : action.payload })
-        
+    switch (action.type) {
+      case 'MAKE_BOARD':
+        return { board : action.payload }
+      default:
+        return state  
     }
-    console.log(state)
-    return state;
+}
+
+const size = (state = {size : ''}, action) => {
+    switch (action.type) {
+        case 'SET_SIZE' :
+          return { size : action.payload}
+        default:
+          return state  
+    }
 }
 
 const storeInstance = createStore(
     combineReducers({
-        reducer
+        reducer,
+        size
     }),
     applyMiddleware(logger)
 )

@@ -39,6 +39,7 @@ class App extends Component {
     console.log(placeHolderArray)
     console.log(this.state.squareArray);
     this.props.dispatch({type:'MAKE_BOARD', payload: placeHolderArray})
+    this.props.dispatch({type: 'SET_SIZE', payload : this.state.size})
   }
 
   render() {
