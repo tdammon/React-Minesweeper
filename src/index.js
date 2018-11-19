@@ -10,7 +10,9 @@ import * as serviceWorker from './serviceWorker';
 const reducer = (state={board : []}, action) => {
     switch (action.type) {
       case 'MAKE_BOARD':
-        return { board : action.payload }
+      return Object.assign({}, state, {
+        board: action.payload
+      })
       default:
         return state  
     }
@@ -19,7 +21,10 @@ const reducer = (state={board : []}, action) => {
 const size = (state = {size : ''}, action) => {
     switch (action.type) {
         case 'SET_SIZE' :
-          return { size : action.payload}
+          return Object.assign({}, state, {
+              size: action.payload
+          })
+          //return { size : action.payload}
         default:
           return state  
     }

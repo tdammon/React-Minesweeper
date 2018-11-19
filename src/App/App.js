@@ -49,14 +49,15 @@ class App extends Component {
           <input onChange={this.handleChange} placeholder='Size'/>
           <button onClick={()=>this.boardMaker(this.state.size)}>Make Board</button>
 
-          <div className='board' style={{width: 40*this.state.size}}>
+          <div className='board' style={{width: 40*this.props.reduxState.size.size}}>
 
             {/* {this.state.squareArray.map(space => {
               return(
                 <div className='square'>{space}</div>
               )
             })} */}
-            {this.state.squareArray.map((space,index) => 
+            {/* {JSON.stringify(this.props.reduxState)} */}
+            {this.props.reduxState.reducer.board.map((space,index) => 
               <Board keys={index} id={space}/>
             )
             }

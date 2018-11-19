@@ -11,6 +11,14 @@ class Board extends Component {
     displayFlag: false,
     counter: 0,
   }
+
+  componentWillReceiveProps() {
+    this.setState({
+      clicked: false,
+      displayFlag: false,
+      counter: 0,
+    })
+  }
   
 
   imageDisplay= () => {
@@ -69,45 +77,9 @@ class Board extends Component {
     }
     this.setState({...this.state, clicked: true, counter: Xcounter})
     return this.state.counter;
-    // if(keys% 8 ===0 && board[keys +1] === 'X'){
-    //    Xcounter++
-    //   }
-    // if(keys% 8 ===7 &&board[keys -1] === 'X'){
-    //     Xcounter++
-    //   }
-    // if(keys/8 <1 &&board[keys +8] === 'X'){
-    //     Xcounter++
-    //   }
-    // if(keys/8 >=7 && board[keys -8] === 'X'){
-    //     Xcounter++
-    //   }
-    // if(keys % 8 !== 0 && keys % 8 !== 7){
-    //   if(board[keys +1] === 'X'){
-    //     Xcounter++
-    //   }
-    //   if(board[keys -1]=== 'X'){
-    //     Xcounter++
-    //   }
-    // }
-    // if(Math.floor(keys/8) > 0 && Math.floor(keys/8) < 7){
-    //   if(board[keys +8] === 'X'){
-    //     Xcounter++
-    //   }
-    //   if(board[keys -8]=== 'X'){
-    //     Xcounter++
-    //   }
-    // }
-    // if(this.props.id === 'X'){
-    //   this.setState({...this.state, clicked: true, counter: 'X'})
-    //   return this.state.counter;
-    // }
-    // this.setState({...this.state, clicked: true, counter: Xcounter})
-    // return this.state.counter;
   }
 
-  // checkSquare= () => { 
-  //   this.showNumber();
-  // }
+  
 
   render() {
     return (
